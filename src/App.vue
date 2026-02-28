@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
+import Login from './components/Login.vue';
+import Dashboard from './components/Dashboard.vue';
+
+const isAuthenticated = ref(false);
+const userEmail = ref('');
+const isAuthReady = ref(false);
+
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isAuthenticated.value = true;
+      userEmail.value = user.email || '';
+    } else {
+      isAuthenticated.value = false;
+      userEmail.value = '';
+    }
+    isAuthReady.value = true;
+  });
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div v-if="!isAuthReady" class="loading-screen">
+    <p>Carregando...</p>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  
+  <template v-else>
+    <Login v-if="!isAuthenticated" />
+    <Dashboard v-else :userEmail="userEmail" />
+  </template>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

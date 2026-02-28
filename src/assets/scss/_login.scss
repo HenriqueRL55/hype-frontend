@@ -1,0 +1,168 @@
+@use 'variables' as *;
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: $bg-color;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .logo {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.5px;
+
+    .logo-blue {
+      color: $primary-color;
+    }
+    
+    .logo-black {
+      color: $text-main;
+    }
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.login-card {
+  background: $surface-color;
+  padding: 2.5rem 2rem;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #262626;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: $text-main;
+    outline: none;
+    transition: border-color $transition-speed;
+
+    &::placeholder {
+      color: #a3a3a3;
+    }
+
+    &:focus {
+      border-color: #a8a8a8; 
+    }
+
+    &:disabled {
+      background-color: #fafafa;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    padding-right: 2.5rem; 
+  }
+
+  .eye-icon {
+    position: absolute;
+    right: 1rem;
+    color: #a3a3a3;
+    font-size: 1rem;
+    cursor: pointer;
+    filter: grayscale(100%) opacity(0.6); 
+  }
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: -0.5rem 0 0 0;
+}
+
+.submit-btn {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color $transition-speed, opacity $transition-speed;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.toggle-mode {
+  margin-top: 2rem;
+  text-align: center;
+  border-top: 1px solid #efefef;
+  padding-top: 1.5rem;
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $text-muted;
+  }
+
+  .toggle-link {
+    color: $text-muted;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color $transition-speed;
+
+    &:hover {
+      color: $text-main;
+      text-decoration: underline;
+    }
+  }
+}
