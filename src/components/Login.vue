@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { FirebaseError } from "firebase/app";
 import { loginUser, registerUser } from "../services/authService";
 import { eyeOpen, eyeClosed } from "../assets/icons/iconsSVG";
 
@@ -39,17 +38,23 @@ const handleSubmit = async () => {
     } else {
       await registerUser(email.value, password.value);
     }
-  } catch (error: unknown) {
-    if (error instanceof FirebaseError) {
-      if (error.code === "auth/email-already-in-use") {
-        errorMessage.value = "Este e-mail já está em uso.";
-      } else if (error.code === "auth/weak-password") {
-        errorMessage.value = "A senha deve ter pelo menos 6 caracteres.";
-      } else {
-        errorMessage.value = "E-mail ou senha incorretos.";
-      }
+  } catch (error: any) {
+    console.error("Erro retornado pelo Firebase:", error);
+
+    if (error.code === "auth/email-already-in-use") {
+      errorMessage.value = "Este e-mail já está em uso.";
+    } else if (error.code === "auth/weak-password") {
+      errorMessage.value = "A senha deve ter pelo menos 6 caracteres.";
+    } else if (
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/user-not-found" ||
+      error.code === "auth/wrong-password"
+    ) {
+      errorMessage.value = "E-mail ou senha incorretos.";
     } else {
-      errorMessage.value = "Ocorreu um erro inesperado.";
+      errorMessage.value = isLoginMode.value
+        ? "Erro ao tentar fazer login. Tente novamente mais tarde."
+        : "Erro ao criar conta. Verifique a configuração do Firebase (E-mail/Senha ativado).";
     }
   } finally {
     isLoading.value = false;

@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 .dashboard-layout {
   min-height: 100vh;
   background-color: #ffffff;
@@ -8,7 +10,7 @@
   background: #ffffff;
   padding: 1rem 2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     padding: 1rem;
   }
 }
@@ -17,14 +19,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
+  max-width: 87.5rem; 
   margin: 0 auto;
 
   .logo {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.03125rem; 
 
     .logo-blue {
       color: #0084ff;
@@ -43,7 +45,7 @@
       color: #6b7280;
       font-size: 0.95rem;
 
-      @media (max-width: 768px) {
+      @media (max-width: 48rem) {
         display: none;
       }
     }
@@ -65,11 +67,11 @@
 }
 
 .dashboard-main {
-  max-width: 1400px;
+  max-width: 87.5rem; 
   margin: 0 auto;
   padding: 3rem 2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     padding: 1.5rem 1rem;
   }
 }
@@ -80,7 +82,7 @@
   align-items: flex-start;
   margin-bottom: 3rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     flex-direction: column;
     gap: 1.5rem;
     margin-bottom: 2rem;
@@ -105,7 +107,7 @@
     gap: 1.5rem;
     flex-wrap: wrap;
 
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       flex-direction: column-reverse;
       width: 100%;
       align-items: stretch;
@@ -115,7 +117,7 @@
       display: flex;
       gap: 0.75rem;
 
-      @media (max-width: 768px) {
+      @media (max-width: 48rem) {
         flex-direction: column;
       }
     }
@@ -127,7 +129,7 @@
       align-items: center;
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      border-radius: 8px;
+      border-radius: 0.5rem; 
       transition: border-color 0.2s;
 
       &:focus-within {
@@ -137,12 +139,12 @@
       .search-icon,
       .filter-icon {
         position: absolute;
-        left: 10px;
+        left: 0.625rem; 
         color: #9ca3af;
         display: flex;
         svg {
-          width: 16px;
-          height: 16px;
+          width: 1rem; 
+          height: 1rem; 
         }
       }
 
@@ -157,22 +159,23 @@
     }
 
     .search-bar {
-      width: 220px;
-      @media (max-width: 768px) {
+      width: 13.75rem;
+      @media (max-width: 48rem) {
         width: 100%;
       }
     }
     .date-filter {
-      width: 160px;
-      @media (max-width: 768px) {
+      width: 10.9375rem; 
+      @media (max-width: 48rem) {
         width: 100%;
       }
       input {
         padding-right: 2rem;
+        min-width: 8.4375rem;
       }
       .clear-filter {
         position: absolute;
-        right: 8px;
+        right: 0.5rem; 
         background: none;
         border: none;
         padding: 0;
@@ -191,15 +194,15 @@
     align-items: center;
     gap: 1.5rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       justify-content: space-between;
     }
 
     .view-toggle {
       display: flex;
       border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 4px;
+      border-radius: 0.5rem; 
+      padding: 0.25rem; 
 
       button {
         background: transparent;
@@ -207,7 +210,7 @@
         padding: 0.4rem 0.6rem;
         cursor: pointer;
         color: #9ca3af;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         display: flex;
         align-items: center;
         transition: all 0.2s;
@@ -224,7 +227,7 @@
       color: white;
       border: none;
       padding: 0.75rem 1.5rem;
-      border-radius: 8px;
+      border-radius: 0.5rem; 
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
@@ -240,10 +243,10 @@
 
 .grid-view {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr)); 
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     grid-template-columns: 1fr;
   }
 }
@@ -254,14 +257,14 @@
   padding: 3rem;
   color: #6b7280;
   background: #f9fafb;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   border: 1px dashed #d1d5db;
 }
 
 .post-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   overflow: hidden;
   cursor: pointer;
   transition:
@@ -273,8 +276,8 @@
   outline: none;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-0.125rem); 
+    box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1);
   }
 
   &:active,
@@ -286,22 +289,22 @@
   .card-image {
     position: relative;
     width: 100%;
-    height: 180px;
+    height: 11.25rem; 
     background: #f3f4f6;
 
     .badge-image {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 0.75rem; 
+      left: 0.75rem; 
       background: rgba(255, 255, 255, 0.9);
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 0.25rem 0.5rem; 
+      border-radius: 0.375rem; 
       font-size: 0.75rem;
       font-weight: 600;
       color: #4b5563;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 0.25rem;
       z-index: 10;
 
       .badge-icon {
@@ -318,8 +321,8 @@
       color: white;
       border: none;
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
+      width: 1.75rem; 
+      height: 1.75rem; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -333,14 +336,14 @@
         background: rgba(0, 0, 0, 0.8);
       }
       &.prev {
-        left: 8px;
+        left: 0.5rem; 
       }
       &.next {
-        right: 8px;
+        right: 0.5rem; 
       }
       svg {
-        width: 14px;
-        height: 14px;
+        width: 0.875rem; 
+        height: 0.875rem; 
       }
     }
 
@@ -418,7 +421,7 @@
   align-items: center;
   margin-bottom: 1.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     flex-direction: column;
     gap: 1rem;
   }
@@ -436,7 +439,7 @@
     cursor: pointer;
     display: flex;
     padding: 0.5rem;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
     outline: none;
@@ -452,7 +455,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     text-transform: capitalize;
-    min-width: 150px;
+    min-width: 9.375rem; 
     text-align: center;
   }
 }
@@ -460,14 +463,14 @@
 .calendar-type-toggle {
   display: flex;
   background: #f3f4f6;
-  padding: 4px;
-  border-radius: 8px;
+  padding: 0.25rem;
+  border-radius: 0.5rem; 
 
   button {
     background: transparent;
     border: none;
     padding: 0.4rem 1rem;
-    border-radius: 6px;
+    border-radius: 0.375rem; 
     font-size: 0.85rem;
     font-weight: 600;
     color: #6b7280;
@@ -479,7 +482,7 @@
     &.active {
       background: #ffffff;
       color: #1a1a1a;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -487,7 +490,7 @@
 .calendar-grid-wrapper {
   width: 100%;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   overflow: hidden;
   background: #f9fafb;
 }
@@ -506,7 +509,7 @@
     color: #6b7280;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     display: none;
   }
 }
@@ -517,13 +520,13 @@
   gap: 1px;
   background: #e5e7eb;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     grid-template-columns: 1fr;
   }
 
   .day-col {
     background: #ffffff;
-    min-height: 200px;
+    min-height: 12.5rem; 
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
@@ -542,7 +545,7 @@
       outline: none;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       min-height: auto;
       padding: 1rem;
     }
@@ -562,8 +565,8 @@
         background: #0084ff;
         color: white;
         border-radius: 50%;
-        width: 28px;
-        height: 28px;
+        width: 1.75rem; 
+        height: 1.75rem; 
         display: flex;
         align-items: center;
         justify-content: center;
@@ -576,7 +579,7 @@
       align-items: center;
       margin-bottom: 0.5rem;
 
-      @media (max-width: 768px) {
+      @media (max-width: 48rem) {
         flex-direction: row;
         gap: 0.5rem;
         margin-bottom: 1rem;
@@ -587,7 +590,7 @@
         font-weight: 600;
         color: #9ca3af;
         margin-bottom: 0.25rem;
-        @media (max-width: 768px) {
+        @media (max-width: 48rem) {
           margin: 0;
         }
       }
@@ -607,7 +610,7 @@
       .entry-item {
         background: #f9fafb;
         border: 1px solid #f3f4f6;
-        border-radius: 6px;
+        border-radius: 0.375rem; 
         padding: 0.4rem;
         display: flex;
         align-items: center;
@@ -625,9 +628,9 @@
 
         img,
         video {
-          width: 24px;
-          height: 24px;
-          border-radius: 4px;
+          width: 1.5rem; 
+          height: 1.5rem; 
+          border-radius: 0.25rem; 
           object-fit: cover;
         }
 
@@ -653,7 +656,7 @@
 
   &.is-month {
     .day-col {
-      min-height: 120px;
+      min-height: 7.5rem;
       .day-header {
         align-items: flex-end;
         padding-right: 0.25rem;
@@ -677,7 +680,7 @@
     background: #f3f4f6;
     border: none;
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     font-weight: 600;
     font-size: 0.9rem;
     color: #4b5563;
@@ -697,8 +700,8 @@
     .icon {
       display: flex;
       svg {
-        width: 16px;
-        height: 16px;
+        width: 1rem; 
+        height: 1rem; 
       }
     }
   }

@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -15,24 +17,24 @@
 .modal-box {
   background: #ffffff;
   width: 100%;
-  max-width: 550px;
+  max-width: 34.375rem; 
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   padding: 2rem;
   box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1),
+    0 0.625rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.04);
 
   &::-webkit-scrollbar {
-    width: 6px;
+    width: 0.375rem; 
   }
   &::-webkit-scrollbar-thumb {
     background: #d1d5db;
-    border-radius: 6px;
+    border-radius: 0.375rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     padding: 1.5rem;
   }
 }
@@ -62,7 +64,7 @@
       cursor: pointer;
       display: flex;
       padding: 0.4rem;
-      border-radius: 6px;
+      border-radius: 0.375rem; 
       transition: background 0.2s;
 
       &:hover:not(:disabled) {
@@ -113,8 +115,8 @@
       display: flex;
       color: #6b7280;
       svg {
-        width: 16px;
-        height: 16px;
+        width: 1rem; 
+        height: 1rem; 
       }
     }
   }
@@ -125,7 +127,7 @@
     width: 100%;
     padding: 0.85rem;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border-radius: 0.5rem; 
     font-family: inherit;
     font-size: 0.95rem;
     outline: none;
@@ -142,7 +144,7 @@
 
   textarea {
     resize: none;
-    height: 120px;
+    height: 7.5rem;
   }
 
   .char-count {
@@ -168,8 +170,8 @@
       font-weight: 600;
       color: #6b7280;
       background: #f3f4f6;
-      padding: 2px 8px;
-      border-radius: 12px;
+      padding: 0.125rem 0.5rem; 
+      border-radius: 0.75rem; 
     }
   }
 
@@ -181,7 +183,7 @@
     text-align: center;
     background-color: #fef2f2;
     padding: 0.5rem;
-    border-radius: 6px;
+    border-radius: 0.375rem; 
   }
 }
 
@@ -193,19 +195,19 @@
   margin-bottom: 1rem;
 
   &::-webkit-scrollbar {
-    height: 6px;
+    height: 0.375rem;
   }
   &::-webkit-scrollbar-thumb {
     background: #d1d5db;
-    border-radius: 6px;
+    border-radius: 0.375rem;
   }
 
   .media-thumb-wrapper {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 7.5rem; 
+    height: 7.5rem; 
     flex-shrink: 0;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     overflow: hidden;
     border: 1px solid #e5e7eb;
     background: #f9fafb;
@@ -228,14 +230,14 @@
 
     .order-badge {
       position: absolute;
-      top: 4px;
-      left: 4px;
+      top: 0.25rem;
+      left: 0.25rem; 
       background: rgba(0, 0, 0, 0.7);
       color: white;
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 0.125rem 0.375rem; 
+      border-radius: 0.25rem;
       z-index: 2;
     }
 
@@ -247,7 +249,7 @@
       background: rgba(0, 0, 0, 0.6);
       display: flex;
       justify-content: space-between;
-      padding: 4px;
+      padding: 0.25rem; 
       z-index: 2;
 
       button {
@@ -255,7 +257,7 @@
         border: none;
         color: white;
         cursor: pointer;
-        padding: 4px;
+        padding: 0.25rem; 
         display: flex;
         align-items: center;
         transition: color 0.2s;
@@ -271,8 +273,8 @@
           cursor: not-allowed;
         }
         svg {
-          width: 14px;
-          height: 14px;
+          width: 0.875rem; 
+          height: 0.875rem; 
         }
       }
     }
@@ -282,9 +284,9 @@
 .dropzone {
   position: relative;
   width: 100%;
-  height: 120px;
+  height: 7.5rem; 
   border: 2px dashed #e5e7eb;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   background: #f9fafb;
   transition: border-color 0.2s;
   display: flex;
@@ -352,9 +354,9 @@
 
   .progress-track {
     width: 100%;
-    height: 6px;
+    height: 0.375rem; 
     background: #e5e7eb;
-    border-radius: 3px;
+    border-radius: 0.1875rem; 
     overflow: hidden;
 
     .progress-fill {
@@ -371,7 +373,7 @@
   gap: 1rem;
   margin-top: 1rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     flex-direction: column-reverse;
   }
 
@@ -381,7 +383,7 @@
 
   button {
     padding: 0.85rem 2rem;
-    border-radius: 8px;
+    border-radius: 0.5rem; 
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
@@ -424,12 +426,12 @@
 
 .confirm-box {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   padding: 2rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem; 
   text-align: center;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1);
   animation: popIn 0.2s ease-out;
 
   .confirm-icon {
@@ -456,14 +458,14 @@
     display: flex;
     gap: 1rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       flex-direction: column-reverse;
     }
 
     button {
       flex: 1;
       padding: 0.75rem 1rem;
-      border-radius: 8px;
+      border-radius: 0.5rem; 
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
@@ -516,7 +518,7 @@
   .video-player-container {
     position: relative;
     width: 90vw;
-    max-width: 1200px;
+    max-width: 75rem;
     height: 85vh;
     display: flex;
     justify-content: center;
@@ -526,19 +528,19 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 0.75rem;
       background: transparent;
     }
 
     .btn-close-video {
       position: absolute;
-      top: -40px;
+      top: -2.5rem; 
       right: 0;
       background: rgba(255, 255, 255, 0.1);
       border: none;
       color: white;
       cursor: pointer;
-      padding: 8px;
+      padding: 0.5rem; 
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -549,8 +551,8 @@
         background: rgba(255, 255, 255, 0.2);
       }
       svg {
-        width: 24px;
-        height: 24px;
+        width: 1.5rem;
+        height: 1.5rem; 
       }
     }
   }

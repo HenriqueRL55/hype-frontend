@@ -72,9 +72,8 @@ A aplicação estará disponível em: `http://localhost:5173`
 
 O deploy oficial desta aplicação já foi realizado e pode ser acessado no link abaixo:
 
-👉 **[INSERIR_O_LINK_DO_FIREBASE_AQUI]**
+👉 **[https://hype-frontend.web.app](https://hype-frontend.web.app)**
 
-*(Nota para os avaliadores: Caso desejem realizar o deploy em um projeto Firebase próprio para testes, basta gerar o build da aplicação executando `npm run build` e, em seguida, rodar `firebase deploy --only hosting` apontando para o seu próprio `projectId`.)*
 
 ---
 Desenvolvido por [Henrique Lengruber](https://github.com/HenriqueRL55).

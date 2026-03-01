@@ -19,7 +19,10 @@ import {
 import ConfirmModal from "./ConfirmModal.vue";
 import type { Post, MediaUploadItem, PostMedia } from "../types";
 
-const props = defineProps<{ post?: Post | null }>();
+const props = defineProps<{
+  post?: Post | null;
+  initialDate?: string;
+}>();
 const emit = defineEmits(["close"]);
 
 const title = ref("");
@@ -29,13 +32,14 @@ const mediaList = ref<MediaUploadItem[]>([]);
 
 const isUploading = ref(false);
 const uploadProgress = ref(0);
+const uploadStatusText = ref("Preparando...");
 const showConfirmEdit = ref(false);
 const showConfirmDelete = ref(false);
 const draggedIndex = ref<number | null>(null);
 
 const videoToPlay = ref<string | null>(null);
-const mediaError = ref(""); 
-const MAX_MEDIA = 6; 
+const mediaError = ref("");
+const MAX_MEDIA = 6;
 
 onMounted(() => {
   if (props.post) {
@@ -54,28 +58,22 @@ onMounted(() => {
       );
       mediaList.value = existingMedia;
     } else if (props.post.mediaUrl) {
-      let mType = props.post.mediaType;
-      if (!mType) {
-        mType =
-          props.post.mediaUrl.includes(".mp4") ||
-          props.post.mediaUrl.includes(".webm")
-            ? "video"
-            : "image";
-      }
       mediaList.value = [
         {
           id: `old_0_${Date.now()}`,
           isNew: false,
           url: props.post.mediaUrl,
-          type: mType as "image" | "video",
+          type: (props.post.mediaType as "image" | "video" | "gif") || "image",
         },
       ];
     }
+  } else if (props.initialDate) {
+    publishDate.value = props.initialDate;
   }
 });
 
 const handleFileChange = (event: Event) => {
-  mediaError.value = ""; 
+  mediaError.value = "";
   const target = event.target as HTMLInputElement;
 
   if (target.files) {
@@ -88,13 +86,19 @@ const handleFileChange = (event: Event) => {
 
     const filesToAdd = filesArray.slice(0, availableSlots);
 
-    const newFiles: MediaUploadItem[] = filesToAdd.map((file, index) => ({
-      id: `new_${index}_${Date.now()}`,
-      isNew: true,
-      file: file,
-      url: URL.createObjectURL(file),
-      type: file.type.startsWith("video/") ? "video" : "image",
-    }));
+    const newFiles: MediaUploadItem[] = filesToAdd.map((file, index) => {
+      let mediaType: "image" | "video" | "gif" = "image";
+      if (file.type.startsWith("video/")) mediaType = "video";
+      else if (file.type.includes("gif")) mediaType = "gif";
+
+      return {
+        id: `new_${index}_${Date.now()}`,
+        isNew: true,
+        file: file,
+        url: URL.createObjectURL(file),
+        type: mediaType,
+      };
+    });
 
     mediaList.value.push(...newFiles);
   }
@@ -103,14 +107,14 @@ const handleFileChange = (event: Event) => {
 
 const removeMedia = (index: number) => {
   mediaList.value.splice(index, 1);
-  mediaError.value = ""; 
+  mediaError.value = "";
 };
 
 const moveLeft = (index: number) => {
   if (index > 0) {
     const currentList = [...mediaList.value];
-    const temp = currentList[index]!;
-    currentList[index] = currentList[index - 1]!;
+    const temp = currentList[index] as MediaUploadItem;
+    currentList[index] = currentList[index - 1] as MediaUploadItem;
     currentList[index - 1] = temp;
     mediaList.value = currentList;
   }
@@ -119,8 +123,8 @@ const moveLeft = (index: number) => {
 const moveRight = (index: number) => {
   if (index < mediaList.value.length - 1) {
     const currentList = [...mediaList.value];
-    const temp = currentList[index]!;
-    currentList[index] = currentList[index + 1]!;
+    const temp = currentList[index] as MediaUploadItem;
+    currentList[index] = currentList[index + 1] as MediaUploadItem;
     currentList[index + 1] = temp;
     mediaList.value = currentList;
   }
@@ -133,7 +137,10 @@ const dragStart = (index: number) => {
 const drop = (index: number) => {
   if (draggedIndex.value !== null && draggedIndex.value !== index) {
     const currentList = [...mediaList.value];
-    const item = currentList.splice(draggedIndex.value, 1)[0]!;
+    const item = currentList.splice(
+      draggedIndex.value,
+      1,
+    )[0] as MediaUploadItem;
     currentList.splice(index, 0, item);
     mediaList.value = currentList;
   }
@@ -173,6 +180,7 @@ const executeDelete = async () => {
   if (!props.post) return;
   showConfirmDelete.value = false;
   isUploading.value = true;
+  uploadStatusText.value = "Excluindo publicação...";
   try {
     await deleteUserPost(props.post.id);
     emit("close");
@@ -191,25 +199,44 @@ const executeSubmit = async () => {
     const totalNewFiles = mediaList.value.filter((m) => m.isNew).length;
     let completedFiles = 0;
 
-    const uploadPromises = mediaList.value.map(async (item, index) => {
+    const finalMedia = [];
+
+    for (let i = 0; i < mediaList.value.length; i++) {
+      const item = mediaList.value[i];
+
+      if (!item) continue;
+
       if (item.isNew && item.file) {
         const fileExt = item.file.name.split(".").pop();
-        const fileName = `posts/${Date.now()}_${index}.${fileExt}`;
-        const url = await uploadMediaFile(item.file, fileName);
+        const fileName = `posts/${Date.now()}_${i}.${fileExt}`;
 
+        const tipoDescritivo =
+          item.type === "video"
+            ? "vídeo"
+            : item.type === "gif"
+              ? "GIF"
+              : "imagem";
+        uploadStatusText.value = `Enviando ${tipoDescritivo} ${completedFiles + 1} de ${totalNewFiles}...`;
+
+        await new Promise((r) => setTimeout(r, 600));
+
+        const url = await uploadMediaFile(item.file, fileName);
         completedFiles++;
+
         if (totalNewFiles > 0) {
           uploadProgress.value = Math.round(
             (completedFiles / totalNewFiles) * 100,
           );
         }
 
-        return { url, type: item.type };
+        finalMedia.push({ url, type: item.type });
+      } else {
+        finalMedia.push({ url: item.url as string, type: item.type });
       }
-      return { url: item.url as string, type: item.type };
-    });
+    }
 
-    const finalMedia = await Promise.all(uploadPromises);
+    uploadStatusText.value = "Salvando os dados da publicação...";
+    await new Promise((r) => setTimeout(r, 600));
 
     const postData: Partial<Post> = {
       title: title.value,
@@ -309,7 +336,10 @@ const executeSubmit = async () => {
             >
               <span class="order-badge">{{ index + 1 }}</span>
 
-              <img v-if="item.type === 'image'" :src="item.url" />
+              <img
+                v-if="item.type === 'image' || item.type === 'gif'"
+                :src="item.url"
+              />
               <video
                 v-else
                 :src="item.url"
@@ -361,15 +391,14 @@ const executeSubmit = async () => {
           <p v-if="mediaError" class="media-error-msg">{{ mediaError }}</p>
         </div>
 
-        <div
-          v-if="isUploading && mediaList.some((m) => m.isNew)"
-          class="progress-container"
-        >
+        <div v-if="isUploading" class="progress-container">
           <div class="progress-info">
-            <span>Enviando...</span>
-            <span class="pct">{{ uploadProgress }}%</span>
+            <span>{{ uploadStatusText }}</span>
+            <span class="pct" v-if="mediaList.some((m) => m.isNew)"
+              >{{ uploadProgress }}%</span
+            >
           </div>
-          <div class="progress-track">
+          <div class="progress-track" v-if="mediaList.some((m) => m.isNew)">
             <div
               class="progress-fill"
               :style="{ width: uploadProgress + '%' }"
@@ -387,7 +416,7 @@ const executeSubmit = async () => {
             Cancelar
           </button>
           <button type="submit" class="btn-submit" :disabled="isUploading">
-            <template v-if="isUploading">Enviando...</template>
+            <template v-if="isUploading">Aguarde...</template>
             <template v-else>{{
               props.post ? "Salvar Alterações" : "Criar Post"
             }}</template>

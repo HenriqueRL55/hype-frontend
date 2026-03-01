@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch } from "vue";
 import { auth } from "../firebase";
 import { logoutUser } from "../services/authService";
 import { subscribeToUserPosts, deleteUserPost } from "../services/postService";
@@ -15,12 +15,9 @@ import {
   iconArrowLeft,
   iconChevronLeft,
   iconChevronRight,
-  iconImage,
-  iconVideo,
   iconSearch,
   iconFilter,
   iconClose,
-  iconImages,
 } from "../assets/icons/iconsSVG";
 import {
   format,
@@ -39,17 +36,40 @@ import {
 } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+import {
+  hasMultipleMedia,
+  getCoverMedia,
+  getFirstMedia,
+  getMediaBadgeIcon,
+  getMediaBadgeLabel,
+} from "../utils/mediaHelpers";
+
 defineProps<{ userEmail: string }>();
 
-const viewMode = ref<"grid" | "calendar" | "day">("grid");
+const savedView = localStorage.getItem("hypeViewMode") as
+  | "grid"
+  | "calendar"
+  | "day"
+  | null;
+const viewMode = ref<"grid" | "calendar" | "day">(
+  savedView && savedView !== "day" ? savedView : "calendar",
+);
+
+watch(viewMode, (newVal) => {
+  if (newVal !== "day") {
+    localStorage.setItem("hypeViewMode", newVal);
+  }
+});
+
 const calendarType = ref<"week" | "month">("week");
 const isModalOpen = ref(false);
 const selectedPost = ref<Post | null>(null);
 const posts = ref<Post[]>([]);
 const currentDate = ref(new Date());
 const searchQuery = ref("");
-const filterDate = ref(format(new Date(), "yyyy-MM-dd"));
+const filterDate = ref("");
 
+const initialDateForModal = ref("");
 const postToDelete = ref<string | null>(null);
 const selectedDayView = ref<Date | null>(null);
 const mediaIndexMap = ref<Record<string, number>>({});
@@ -90,6 +110,13 @@ const executeDelete = async () => {
 
 const openCreateModal = () => {
   selectedPost.value = null;
+  if (viewMode.value === "day" && selectedDayView.value) {
+    initialDateForModal.value = format(selectedDayView.value, "yyyy-MM-dd");
+  } else if (viewMode.value === "grid" && filterDate.value) {
+    initialDateForModal.value = filterDate.value;
+  } else {
+    initialDateForModal.value = "";
+  }
   isModalOpen.value = true;
 };
 
@@ -200,47 +227,6 @@ const formatDate = (dateString: string) => {
   if (!dateString) return "";
   return format(parseISO(dateString), "dd 'de' MMM, yyyy", { locale: ptBR });
 };
-
-const hasMultipleMedia = (post: Post) => {
-  return post.media && post.media.length > 1;
-};
-
-const getCoverMedia = (post: Post): { url: string; type: string } | null => {
-  if (post.media && post.media.length > 0) {
-    const index = mediaIndexMap.value[post.id] || 0;
-    return post.media[index] || null;
-  }
-  if (post.mediaUrl) {
-    return { url: post.mediaUrl, type: post.mediaType || "image" };
-  }
-  return null;
-};
-
-const getFirstMedia = (post: Post): { url: string; type: string } | null => {
-  if (post.media && post.media.length > 0) {
-    return post.media[0] || null;
-  }
-  if (post.mediaUrl) {
-    return { url: post.mediaUrl, type: post.mediaType || "image" };
-  }
-  return null;
-};
-
-const getCurrentMediaType = (post: Post) => {
-  const cover = getCoverMedia(post);
-  return cover ? cover.type : "image";
-};
-
-const getMediaBadgeIcon = (post: Post) => {
-  if (hasMultipleMedia(post)) return iconImages;
-  return getCurrentMediaType(post) === "video" ? iconVideo : iconImage;
-};
-
-const getMediaBadgeLabel = (post: Post) => {
-  if (hasMultipleMedia(post))
-    return `${(mediaIndexMap.value[post.id] || 0) + 1} / ${post.media?.length}`;
-  return getCurrentMediaType(post) === "video" ? "Vídeo" : "Imagem";
-};
 </script>
 
 <template>
@@ -328,8 +314,11 @@ const getMediaBadgeLabel = (post: Post) => {
         >
           <div class="card-image">
             <div class="badge-image">
-              <span class="badge-icon" v-html="getMediaBadgeIcon(post)"></span>
-              {{ getMediaBadgeLabel(post) }}
+              <span
+                class="badge-icon"
+                v-html="getMediaBadgeIcon(post, mediaIndexMap[post.id] || 0)"
+              ></span>
+              {{ getMediaBadgeLabel(post, mediaIndexMap[post.id] || 0) }}
             </div>
 
             <button
@@ -340,12 +329,19 @@ const getMediaBadgeLabel = (post: Post) => {
             ></button>
 
             <img
-              v-if="getCoverMedia(post)?.type === 'image'"
-              :src="getCoverMedia(post)?.url"
+              v-if="
+                getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type ===
+                  'image' ||
+                getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type === 'gif'
+              "
+              :src="getCoverMedia(post, mediaIndexMap[post.id] || 0)?.url"
             />
             <video
-              v-else-if="getCoverMedia(post)?.type === 'video'"
-              :src="getCoverMedia(post)?.url"
+              v-else-if="
+                getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type ===
+                'video'
+              "
+              :src="getCoverMedia(post, mediaIndexMap[post.id] || 0)?.url"
               muted
               loop
               playsinline
@@ -445,7 +441,10 @@ const getMediaBadgeLabel = (post: Post) => {
                   @click.stop="openEditModal(post)"
                 >
                   <img
-                    v-if="getFirstMedia(post)?.type === 'image'"
+                    v-if="
+                      getFirstMedia(post)?.type === 'image' ||
+                      getFirstMedia(post)?.type === 'gif'
+                    "
                     :src="getFirstMedia(post)?.url"
                   />
                   <video
@@ -493,9 +492,9 @@ const getMediaBadgeLabel = (post: Post) => {
               <div class="badge-image">
                 <span
                   class="badge-icon"
-                  v-html="getMediaBadgeIcon(post)"
+                  v-html="getMediaBadgeIcon(post, mediaIndexMap[post.id] || 0)"
                 ></span>
-                {{ getMediaBadgeLabel(post) }}
+                {{ getMediaBadgeLabel(post, mediaIndexMap[post.id] || 0) }}
               </div>
 
               <button
@@ -508,12 +507,20 @@ const getMediaBadgeLabel = (post: Post) => {
               ></button>
 
               <img
-                v-if="getCoverMedia(post)?.type === 'image'"
-                :src="getCoverMedia(post)?.url"
+                v-if="
+                  getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type ===
+                    'image' ||
+                  getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type ===
+                    'gif'
+                "
+                :src="getCoverMedia(post, mediaIndexMap[post.id] || 0)?.url"
               />
               <video
-                v-else-if="getCoverMedia(post)?.type === 'video'"
-                :src="getCoverMedia(post)?.url"
+                v-else-if="
+                  getCoverMedia(post, mediaIndexMap[post.id] || 0)?.type ===
+                  'video'
+                "
+                :src="getCoverMedia(post, mediaIndexMap[post.id] || 0)?.url"
                 muted
                 loop
                 playsinline
@@ -556,6 +563,7 @@ const getMediaBadgeLabel = (post: Post) => {
     <ModalPost
       v-if="isModalOpen"
       :post="selectedPost"
+      :initial-date="initialDateForModal"
       @close="isModalOpen = false"
     />
 
