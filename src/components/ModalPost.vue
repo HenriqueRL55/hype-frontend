@@ -157,6 +157,17 @@ const closeVideo = () => {
   videoToPlay.value = null;
 };
 
+const handleDateFocus = (event: Event) => {
+  (event.target as HTMLInputElement).type = 'date';
+};
+
+const handleDateBlur = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (!target.value) {
+    target.type = 'text';
+  }
+};
+
 const triggerSubmit = () => {
   if (!title.value || !description.value || !publishDate.value) return;
   if (mediaList.value.length === 0) {
@@ -314,8 +325,8 @@ const executeSubmit = async () => {
             :disabled="isUploading"
             required
             placeholder="dd/mm/aaaa"
-            @focus="($event.target as any).type = 'date'"
-            @blur="if(!($event.target as any).value) ($event.target as any).type = 'text'"
+            @focus="handleDateFocus"
+            @blur="handleDateBlur"
           />
         </div>
 
