@@ -7,7 +7,7 @@
   border-bottom: 1px solid #e5e7eb;
   background: #ffffff;
   padding: 1rem 2rem;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
   }
@@ -25,16 +25,20 @@
     font-weight: 700;
     margin: 0;
     letter-spacing: -0.5px;
-    
-    .logo-blue { color: #0084ff; }
-    .logo-black { color: #1a1a1a; }
+
+    .logo-blue {
+      color: #0084ff;
+    }
+    .logo-black {
+      color: #1a1a1a;
+    }
   }
 
   .user-actions {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    
+
     .user-email {
       color: #6b7280;
       font-size: 0.95rem;
@@ -52,8 +56,10 @@
       align-items: center;
       padding: 0;
       transition: opacity 0.2s;
-      
-      &:hover { opacity: 0.7; }
+
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
 }
@@ -114,7 +120,8 @@
       }
     }
 
-    .search-bar, .date-filter {
+    .search-bar,
+    .date-filter {
       position: relative;
       display: flex;
       align-items: center;
@@ -127,12 +134,16 @@
         border-color: #0084ff;
       }
 
-      .search-icon, .filter-icon {
+      .search-icon,
+      .filter-icon {
         position: absolute;
         left: 10px;
         color: #9ca3af;
         display: flex;
-        svg { width: 16px; height: 16px; }
+        svg {
+          width: 16px;
+          height: 16px;
+        }
       }
 
       input {
@@ -145,11 +156,20 @@
       }
     }
 
-    .search-bar { width: 220px; @media (max-width: 768px) { width: 100%; } }
-    .date-filter { 
-      width: 160px; 
-      @media (max-width: 768px) { width: 100%; }
-      input { padding-right: 2rem; }
+    .search-bar {
+      width: 220px;
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+    }
+    .date-filter {
+      width: 160px;
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+      input {
+        padding-right: 2rem;
+      }
       .clear-filter {
         position: absolute;
         right: 8px;
@@ -159,7 +179,9 @@
         cursor: pointer;
         color: #9ca3af;
         display: flex;
-        &:hover { color: #ef4444; }
+        &:hover {
+          color: #ef4444;
+        }
       }
     }
   }
@@ -178,7 +200,7 @@
       border: 1px solid #e5e7eb;
       border-radius: 8px;
       padding: 4px;
-      
+
       button {
         background: transparent;
         border: none;
@@ -209,7 +231,9 @@
       transition: background 0.2s;
       white-space: nowrap;
 
-      &:hover { background: #ea580c; }
+      &:hover {
+        background: #ea580c;
+      }
     }
   }
 }
@@ -240,7 +264,9 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   -webkit-tap-highlight-color: transparent;
@@ -250,8 +276,9 @@
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
-  
-  &:active, &:focus {
+
+  &:active,
+  &:focus {
     background: #ffffff;
     outline: none;
   }
@@ -287,7 +314,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       color: white;
       border: none;
       border-radius: 50%;
@@ -301,14 +328,24 @@
       transition: background 0.2s;
       -webkit-tap-highlight-color: transparent;
       outline: none;
-      
-      &:hover { background: rgba(0,0,0,0.8); }
-      &.prev { left: 8px; }
-      &.next { right: 8px; }
-      svg { width: 14px; height: 14px; }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+      &.prev {
+        left: 8px;
+      }
+      &.next {
+        right: 8px;
+      }
+      svg {
+        width: 14px;
+        height: 14px;
+      }
     }
 
-    img, video {
+    img,
+    video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -344,7 +381,9 @@
         -webkit-tap-highlight-color: transparent;
         outline: none;
 
-        &:hover { color: #ef4444; }
+        &:hover {
+          color: #ef4444;
+        }
       }
     }
 
@@ -401,7 +440,10 @@
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
     outline: none;
-    &:hover { background: #e5e7eb; color: #1a1a1a; }
+    &:hover {
+      background: #e5e7eb;
+      color: #1a1a1a;
+    }
   }
 
   .period-label {
@@ -437,7 +479,7 @@
     &.active {
       background: #ffffff;
       color: #1a1a1a;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -490,9 +532,12 @@
     -webkit-tap-highlight-color: transparent;
     outline: none;
 
-    &:hover { background: #f9fafb; }
-    
-    &:active, &:focus {
+    &:hover {
+      background: #f9fafb;
+    }
+
+    &:active,
+    &:focus {
       background: #ffffff;
       outline: none;
     }
@@ -504,8 +549,12 @@
 
     &.out-of-month {
       background: #f9fafb;
-      .day-header .day-num { color: #d1d5db; }
-      &:hover { background: #f3f4f6; }
+      .day-header .day-num {
+        color: #d1d5db;
+      }
+      &:hover {
+        background: #f3f4f6;
+      }
     }
 
     &.today {
@@ -538,7 +587,9 @@
         font-weight: 600;
         color: #9ca3af;
         margin-bottom: 0.25rem;
-        @media (max-width: 768px) { margin: 0; }
+        @media (max-width: 768px) {
+          margin: 0;
+        }
       }
 
       .day-num {
@@ -561,7 +612,9 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        transition: background 0.2s, border-color 0.2s;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
         -webkit-tap-highlight-color: transparent;
         outline: none;
 
@@ -570,7 +623,8 @@
           border-color: #d1d5db;
         }
 
-        img, video {
+        img,
+        video {
           width: 24px;
           height: 24px;
           border-radius: 4px;
@@ -642,7 +696,10 @@
 
     .icon {
       display: flex;
-      svg { width: 16px; height: 16px; }
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 

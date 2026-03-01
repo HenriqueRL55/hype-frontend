@@ -1,6 +1,6 @@
 export interface PostMedia {
   url: string;
-  type: 'image' | 'video';
+  type: "image" | "video";
 }
 
 export interface Post {
@@ -11,7 +11,7 @@ export interface Post {
   userId?: string;
   media?: PostMedia[];
   mediaUrl?: string;
-  mediaType?: 'image' | 'video';
+  mediaType?: "image" | "video";
   createdAt?: any;
   updatedAt?: any;
 }
@@ -21,7 +21,7 @@ export interface MediaUploadItem {
   isNew: boolean;
   file?: File;
   url?: string;
-  type: 'image' | 'video';
+  type: "image" | "video";
 }
 
 export interface ConfirmModalProps {

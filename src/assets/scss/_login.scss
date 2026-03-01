@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .login-wrapper {
   display: flex;
@@ -30,7 +30,7 @@
     .logo-blue {
       color: $primary-color;
     }
-    
+
     .logo-black {
       color: $text-main;
     }
@@ -83,7 +83,7 @@
     }
 
     &:focus {
-      border-color: #a8a8a8; 
+      border-color: #a8a8a8;
     }
 
     &:disabled {
@@ -99,7 +99,7 @@
   align-items: center;
 
   input {
-    padding-right: 2.5rem; 
+    padding-right: 2.5rem;
   }
 
   .eye-icon {
@@ -108,7 +108,7 @@
     color: #a3a3a3;
     font-size: 1rem;
     cursor: pointer;
-    filter: grayscale(100%) opacity(0.6); 
+    filter: grayscale(100%) opacity(0.6);
   }
 }
 
@@ -129,7 +129,9 @@
   font-weight: 600;
   cursor: pointer;
   margin-top: 0.5rem;
-  transition: background-color $transition-speed, opacity $transition-speed;
+  transition:
+    background-color $transition-speed,
+    opacity $transition-speed;
 
   &:hover:not(:disabled) {
     background-color: $primary-hover;

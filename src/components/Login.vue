@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { FirebaseError } from 'firebase/app';
-import { loginUser, registerUser } from '../services/authService';
-import { eyeOpen, eyeClosed } from '../assets/icons/iconsSVG';
+import { ref } from "vue";
+import { FirebaseError } from "firebase/app";
+import { loginUser, registerUser } from "../services/authService";
+import { eyeOpen, eyeClosed } from "../assets/icons/iconsSVG";
 
-const emit = defineEmits(['login-success']);
+const emit = defineEmits(["login-success"]);
 
 const isLoginMode = ref(true);
-const email = ref('');
-const password = ref('');
-const errorMessage = ref('');
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 const isLoading = ref(false);
 const showPassword = ref(false);
 
 const toggleMode = () => {
   isLoginMode.value = !isLoginMode.value;
-  errorMessage.value = '';
-  email.value = '';
-  password.value = '';
+  errorMessage.value = "";
+  email.value = "";
+  password.value = "";
 };
 
 const togglePasswordVisibility = () => {
@@ -26,12 +26,12 @@ const togglePasswordVisibility = () => {
 
 const handleSubmit = async () => {
   if (!email.value || !password.value) {
-    errorMessage.value = 'Por favor, preencha todos os campos.';
+    errorMessage.value = "Por favor, preencha todos os campos.";
     return;
   }
 
   isLoading.value = true;
-  errorMessage.value = '';
+  errorMessage.value = "";
 
   try {
     if (isLoginMode.value) {
@@ -41,15 +41,15 @@ const handleSubmit = async () => {
     }
   } catch (error: unknown) {
     if (error instanceof FirebaseError) {
-      if (error.code === 'auth/email-already-in-use') {
-        errorMessage.value = 'Este e-mail já está em uso.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage.value = 'A senha deve ter pelo menos 6 caracteres.';
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage.value = "Este e-mail já está em uso.";
+      } else if (error.code === "auth/weak-password") {
+        errorMessage.value = "A senha deve ter pelo menos 6 caracteres.";
       } else {
-        errorMessage.value = 'E-mail ou senha incorretos.';
+        errorMessage.value = "E-mail ou senha incorretos.";
       }
     } else {
-      errorMessage.value = 'Ocorreu um erro inesperado.';
+      errorMessage.value = "Ocorreu um erro inesperado.";
     }
   } finally {
     isLoading.value = false;
@@ -60,13 +60,13 @@ const handleSubmit = async () => {
 <template>
   <div class="login-wrapper">
     <div class="login-container">
-      
       <div class="login-header">
         <h1 class="logo">
-          <span class="logo-blue">hype</span><span class="logo-black">social</span>
+          <span class="logo-blue">hype</span
+          ><span class="logo-black">social</span>
         </h1>
         <p class="subtitle">
-          {{ isLoginMode ? 'Acesse sua conta' : 'Crie sua conta para começar' }}
+          {{ isLoginMode ? "Acesse sua conta" : "Crie sua conta para começar" }}
         </p>
       </div>
 
@@ -95,7 +95,11 @@ const handleSubmit = async () => {
                 required
                 :disabled="isLoading"
               />
-              <span class="eye-icon" @click="togglePasswordVisibility" v-html="showPassword ? eyeClosed : eyeOpen"></span>
+              <span
+                class="eye-icon"
+                @click="togglePasswordVisibility"
+                v-html="showPassword ? eyeClosed : eyeOpen"
+              ></span>
             </div>
           </div>
 
@@ -103,20 +107,23 @@ const handleSubmit = async () => {
 
           <button type="submit" class="submit-btn" :disabled="isLoading">
             <template v-if="isLoading">Carregando...</template>
-            <template v-else>{{ isLoginMode ? 'Entrar' : 'Criar conta' }}</template>
+            <template v-else>{{
+              isLoginMode ? "Entrar" : "Criar conta"
+            }}</template>
           </button>
         </form>
 
         <div class="toggle-mode">
           <p v-if="isLoginMode">
-            Não tem conta? <span @click="toggleMode" class="toggle-link">Cadastre-se</span>
+            Não tem conta?
+            <span @click="toggleMode" class="toggle-link">Cadastre-se</span>
           </p>
           <p v-else>
-            Já tem conta? <span @click="toggleMode" class="toggle-link">Faça login</span>
+            Já tem conta?
+            <span @click="toggleMode" class="toggle-link">Faça login</span>
           </p>
         </div>
       </div>
-
     </div>
   </div>
 </template>
