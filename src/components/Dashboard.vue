@@ -135,17 +135,6 @@ const closeDayView = () => {
   viewMode.value = "calendar";
 };
 
-const handleDateFocus = (event: Event) => {
-  (event.target as HTMLInputElement).type = 'date';
-};
-
-const handleDateBlur = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (!target.value) {
-    target.type = 'text';
-  }
-};
-
 const prevMedia = (post: Post) => {
   const current = mediaIndexMap.value[post.id] || 0;
   if (current > 0) mediaIndexMap.value[post.id] = current - 1;
@@ -278,12 +267,12 @@ const formatDate = (dateString: string) => {
             </div>
             <div class="date-filter">
               <span class="filter-icon" v-html="iconFilter"></span>
+              
               <input
-                :type="filterDate ? 'date' : 'text'"
+                type="date"
                 v-model="filterDate"
                 placeholder="Filtrar data..."
-                @focus="handleDateFocus"
-                @blur="handleDateBlur"
+                :class="{ 'is-empty': !filterDate }"
               />
               <button
                 v-if="filterDate"

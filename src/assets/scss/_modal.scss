@@ -135,6 +135,9 @@
     background-color: #ffffff;
     color: #1a1a1a;
     opacity: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 2.9rem;
 
     &:focus {
       border-color: #0084ff;
@@ -144,9 +147,18 @@
       cursor: not-allowed;
     }
   }
-
+  
   input[type="date"] {
-    min-height: 2.9rem;
+    &.is-empty::-webkit-datetime-edit {
+      color: transparent;
+    }
+    &.is-empty::before {
+      content: attr(placeholder);
+      color: #9ca3af;
+      position: absolute;
+      left: 0.85rem;
+      pointer-events: none;
+    }
   }
 
   textarea {

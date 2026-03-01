@@ -156,6 +156,10 @@
         outline: none;
         font-size: 0.9rem;
         color: #1a1a1a;
+        -webkit-appearance: none;
+        appearance: none;
+        min-height: 2.5rem;
+        opacity: 1;
       }
     }
 
@@ -165,6 +169,7 @@
         width: 100%;
       }
     }
+    
     .date-filter {
       width: 10.9375rem; 
       @media (max-width: 48rem) {
@@ -173,7 +178,19 @@
       input {
         padding-right: 2rem;
         min-width: 8.4375rem;
+        
+        &.is-empty::-webkit-datetime-edit {
+          color: transparent;
+        }
+        &.is-empty::before {
+          content: attr(placeholder);
+          color: #9ca3af;
+          position: absolute;
+          left: 2.2rem;
+          pointer-events: none;
+        }
       }
+      
       .clear-filter {
         position: absolute;
         right: 0.5rem; 

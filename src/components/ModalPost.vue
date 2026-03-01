@@ -157,17 +157,6 @@ const closeVideo = () => {
   videoToPlay.value = null;
 };
 
-const handleDateFocus = (event: Event) => {
-  (event.target as HTMLInputElement).type = 'date';
-};
-
-const handleDateBlur = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (!target.value) {
-    target.type = 'text';
-  }
-};
-
 const triggerSubmit = () => {
   if (!title.value || !description.value || !publishDate.value) return;
   if (mediaList.value.length === 0) {
@@ -319,14 +308,14 @@ const executeSubmit = async () => {
           <label class="label-with-icon">
             <span class="icon" v-html="iconCalendar"></span> Data de publicação
           </label>
+          
           <input
-            :type="publishDate ? 'date' : 'text'"
+            type="date"
             v-model="publishDate"
             :disabled="isUploading"
             required
             placeholder="dd/mm/aaaa"
-            @focus="handleDateFocus"
-            @blur="handleDateBlur"
+            :class="{ 'is-empty': !publishDate }"
           />
         </div>
 
