@@ -35,37 +35,38 @@ O projeto está configurado para utilizar o **Firebase Emulator Suite** durante 
 
 ### 2. Instalação
 Clone o repositório e instale as dependências:
-\`\`\`bash
+```bash
 git clone https://github.com/HenriqueRL55/hype-frontend.git
 cd hype-frontend
 npm install
-\`\`\`
+```
 
 ### 3. Configuração do Firebase e Variáveis de Ambiente
 O projeto utiliza variáveis de ambiente para a conexão com o Firebase. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes chaves utilizadas para este teste:
 
-\`\`\`env
+```env
 VITE_FIREBASE_API_KEY="AIzaSyBsU6HFf7PAJjEicsQsh1DbFMe9_D1yLF0"
 VITE_FIREBASE_AUTH_DOMAIN="hype-frontend.firebaseapp.com"
 VITE_FIREBASE_PROJECT_ID="hype-frontend"
 VITE_FIREBASE_STORAGE_BUCKET="hype-frontend.firebasestorage.app"
 VITE_FIREBASE_MESSAGING_SENDER_ID="406750384138"
 VITE_FIREBASE_APP_ID="1:406750384138:web:737c20294f351ec32c4ff3"
-\`\`\`
+```
 
 > **Nota sobre o Emulador:** O arquivo `src/firebase.ts` intercepta o modo de desenvolvimento (`import.meta.env.DEV`) e redireciona automaticamente o Auth (porta 9099), o Firestore (porta 8080) e o Storage (porta 9199) para os emuladores locais.
 
 ### 4. Executando o Emulador do Firebase
 Para inicializar os serviços do Firebase localmente, abra um terminal na raiz do projeto e execute:
-\`\`\`bash
+```bash
 firebase emulators:start
-\`\`\`
+```
 
 ### 5. Executando a Aplicação Vue
 Em um **novo terminal** (mantendo o emulador rodando no anterior), inicie o servidor de desenvolvimento:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
+
 A aplicação estará disponível em: `http://localhost:5173`
 
 ## ☁️ Link em Produção (Firebase Hosting)
