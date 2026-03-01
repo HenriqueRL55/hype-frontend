@@ -132,6 +132,9 @@
     font-size: 0.95rem;
     outline: none;
     transition: border-color 0.2s;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    opacity: 1;
 
     &:focus {
       border-color: #0084ff;
@@ -140,6 +143,10 @@
       background: #f9fafb;
       cursor: not-allowed;
     }
+  }
+
+  input[type="date"] {
+    min-height: 2.9rem;
   }
 
   textarea {

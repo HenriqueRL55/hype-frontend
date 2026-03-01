@@ -309,10 +309,13 @@ const executeSubmit = async () => {
             <span class="icon" v-html="iconCalendar"></span> Data de publicação
           </label>
           <input
-            type="date"
+            :type="publishDate ? 'date' : 'text'"
             v-model="publishDate"
             :disabled="isUploading"
             required
+            placeholder="dd/mm/aaaa"
+            @focus="($event.target as any).type = 'date'"
+            @blur="if(!($event.target as any).value) ($event.target as any).type = 'text'"
           />
         </div>
 

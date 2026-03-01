@@ -267,7 +267,13 @@ const formatDate = (dateString: string) => {
             </div>
             <div class="date-filter">
               <span class="filter-icon" v-html="iconFilter"></span>
-              <input type="date" v-model="filterDate" />
+              <input
+                :type="filterDate ? 'date' : 'text'"
+                v-model="filterDate"
+                placeholder="Filtrar data..."
+                @focus="($event.target as any).type = 'date'"
+                @blur="if(!($event.target as any).value) ($event.target as any).type = 'text'"
+              />
               <button
                 v-if="filterDate"
                 class="clear-filter"
