@@ -171,13 +171,14 @@
     }
     
     .date-filter {
-      width: 10.9375rem; 
+  
+      width: 13.5rem; 
       @media (max-width: 48rem) {
         width: 100%;
       }
       input {
-        padding-right: 2rem;
-        min-width: 8.4375rem;
+        padding-right: 2.5rem;
+        min-width: 9rem;
         
         &.is-empty::-webkit-datetime-edit {
           color: transparent;
@@ -187,6 +188,11 @@
           color: #9ca3af;
           position: absolute;
           left: 2.2rem;
+          /* CORREÇÕES: Adicionados limites de segurança para que o texto não sobreponha o ícone */
+          right: 2.5rem; 
+          white-space: nowrap; 
+          overflow: hidden; 
+          text-overflow: ellipsis; 
           pointer-events: none;
         }
       }
